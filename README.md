@@ -18,13 +18,13 @@ The rootkit can do the following:
 
 ##Supported Platforms
 
-The rootkit was tested to work on Linux kernels 2.6.32-38 and 4.4.0-22 as provided by Ubuntu in Ubuntu 10.04.4 LTS and Ubuntu 16.04 LTS respectivly.
+The rootkit was tested to work on Linux kernels 2.6.32-38 and 4.4.0-22 as provided by Ubuntu in Ubuntu 10.04.4 LTS and Ubuntu 16.04 LTS respectively.
 
-There is some architecture-specific code in the rootkit, which is implemented only for x86 and x86-64 architectures. This code is not strictly neccessary for the rootkit to function, it can be stripped away with caution, but you must be a very unfun person if you are willing to miss out on overwriting parts of machine code of the existing kernel functions, making them do what you want them to do, or disabling write protected memory pages, overwriting important kernel data structures with your data.
+There is some architecture-specific code in the rootkit, which is implemented only for x86 and x86-64 architectures. This code is not strictly necessary for the rootkit to function, it can be stripped away with caution, but you must be a very boring person if you are willing to miss on the fun of overwriting parts of machine code of the existing kernel functions, making them do what you want them to do, or disabling write protected memory pages, overwriting important kernel data structures with your data.
 
 ##Build
 
-###Setting Up Enviroment
+###Setting Up Environment
 
 Warm up your VM of choice.
 
@@ -92,7 +92,7 @@ rmmod rootkit.ko
 
 ##YOU ARE OUT OF YOUR MIND TO PUBLICY RELEASE SUCH MALICIOUS CODE ONLINE, YOU ARE LITERALLY ARMING SCRIPT KIDDIES WITH NUKES!!!1
 
-Not really, there are many artciles online on how to write a Linux rootkit with the full source code provided, not to mention the countless GitHub repositories.
+Not really, there are many articles online on how to write a Linux rootkit with the full source code provided, not to mention the countless GitHub repositories.
 
 ##License
 This project is licensed under [GPLv2](LICENSE).
