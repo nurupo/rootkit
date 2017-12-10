@@ -92,7 +92,7 @@ Unload rootkit:
 
 ```sh
 ./client --unhide
-./client --unproect
+./client --unprotect
 rmmod rootkit.ko
 ```
 
