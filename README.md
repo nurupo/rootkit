@@ -36,8 +36,8 @@ Grab and install the desired Ubuntu image:
 
 | Kernel / arch |         x86         |        x86-64        |
 |:-------------:|:-------------------:|:--------------------:|
-|     2.6.32    | [Ubuntu 10.04.4 i386 (694M)](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-i386.iso.torrent) | [Ubuntu 10.04.4 amd64 (681M)](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-amd64.iso.torrent) |
-|     4.4.0     | [Ubuntu 16.04 i386 (647M)](http://releases.ubuntu.com/16.04/ubuntu-16.04-desktop-i386.iso.torrent)  |  [Ubuntu 16.04 amd64 (655M)](http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso.torrent)  |
+|     2.6.32    | Ubuntu 10.04.4 i386 (694M) [[torrent]](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-i386.iso.torrent) [[iso]](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-i386.iso) | Ubuntu 10.04.4 amd64 (681M) [[torrent]](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-amd64.iso.torrent) [[iso]](http://old-releases.ubuntu.com/releases/10.04.0/ubuntu-10.04.4-server-amd64.iso) |
+|     4.4.0     | Ubuntu 16.04 i386 (647M) [[torrent]](http://old-releases.ubuntu.com/releases/16.04.0/ubuntu-16.04-server-i386.iso.torrent) [[iso]](http://old-releases.ubuntu.com/releases/16.04.0/ubuntu-16.04-server-i386.iso) |  Ubuntu 16.04 amd64 (655M) [[torrent]](http://old-releases.ubuntu.com/releases/16.04.0/ubuntu-16.04-server-amd64.iso.torrent) [[iso]](http://old-releases.ubuntu.com/releases/16.04.0/ubuntu-16.04-server-amd64.iso) |
 
 For Ubuntu 10.04, patch the package repository address:
 
