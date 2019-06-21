@@ -100,5 +100,16 @@ rmmod rootkit.ko
 ## YOU ARE OUT OF YOUR MIND TO PUBLICY RELEASE SUCH MALICIOUS CODE ONLINE, YOU ARE LITERALLY ARMING SCRIPT KIDDIES WITH NUKES!!!1
 Not really, there are many articles online on how to write a Linux rootkit with the full source code provided, not to mention the countless GitHub repositories.
 
+## References
+The following materials were used in writing this rootkit:
+
+- [Linux kernel code](http://lxr.free-electrons.com)
+- [Linux kernel documentation](https://www.kernel.org/doc/)
+- [Linux Loadable Kernel Module HOWTO](http://www.tldp.org/HOWTO/html_single/Module-HOWTO/)
+- [WRITING A SIMPLE ROOTKIT FOR LINUX](https://web.archive.org/web/20180609141026/https://w3.cs.jmu.edu/kirkpams/550-f12/papers/linux_rootkit.pdf)
+- [Modern Linux Rootkits 101](http://turbochaos.blogspot.com/2013/09/linux-rootkits-101-1-of-3.html)
+- [Writing Modern Linux Rootkits 201 - VFS](http://turbochaos.blogspot.com/2013/10/writing-linux-rootkits-201-23.html)
+- [Linux Kernel Module example. Rickroll prank.](https://web.archive.org/web/20170218150045/http://maitesin.github.io/Module_prank/)
+
 ## License
 This project is licensed under [GPLv2](LICENSE).
