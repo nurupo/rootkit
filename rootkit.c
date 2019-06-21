@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2017 Maxim Biro <nurupo.contributions@gmail.com>
+ * Copyright (C) 2016-2019 Maxim Biro <nurupo.contributions@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 // Copy-pasted from Linux sources as it's not provided in public headers
 // of newer Linux.
 // Might differ from one version of Linux kernel to another, so update as
-// necessary
+// necessary.
 // http://lxr.free-electrons.com/source/fs/proc/internal.h?v=4.4#L31
 struct proc_dir_entry {
     unsigned int low_ino;
@@ -219,8 +219,8 @@ void *hook_get_original(void *modified_function)
 }
 
 /**
- * Removes all hook records, restores the overwritten function pointer to its
- * original value.
+ * Removes all hook records, restores the overwritten function pointers to
+ * their original value.
  */
 void hook_remove_all(void)
 {
@@ -233,14 +233,18 @@ void hook_remove_all(void)
         *h->modified_at_address = h->original_function;
         ENABLE_W_PROTECTED_MEMORY
     }
-    // a hack to let the changes made by the loop above propagate
-    // as some process might be in the middle of our `modified_function`
-    // and call `hook_get_original()`, which would return NULL if we
-    // `list_del()` everything
-    // so we make it so that instead of `modified_function` the
-    // `original_function` would get called again, then sleep to wait until
-    // existing `modified_function` calls finish and only them remove elements
-    // fro mthe list
+    // a hack to let the changes made by the loop above propagate, as some
+    // process might be in the middle of executing our `modified_function`
+    // which calls the original function inside by getting it from the
+    // `hook_get_original()` call, which would return NULL if we `list_del()`
+    // everything, and, well, bad things happen if you try to use NULL as a
+    // function pointer and call into it.
+    // to get around this issue we:
+    // 1. make it so that instead of `modified_function` the
+    //    `original_function` would get called. this is done above.
+    // 2. sleep hopefully long enough to let all the proesses that are in the
+    //    middle of running `modified_function` to finish running that function
+    // 3. finally, remove all the elements from the list
     msleep(10);
     list_for_each_entry_safe(h, tmp, &hook_list, list) {
         list_del(&h->list);
@@ -251,6 +255,8 @@ void hook_remove_all(void)
 
 // ========== END HOOK LIST ==========
 
+
+// ========== HOOK EXAMPLES ==========
 
 unsigned long read_count = 0;
 
@@ -276,11 +282,15 @@ asmlinkage long write(unsigned int fd, const char __user *buf, size_t count)
 }
 
 
+// ========== END HOOK EXAMPLES ==========
+
+
 // ========== ASM HOOK LIST ==========
 
 #if defined __i386__
     // push 0x00000000, ret
     #define ASM_HOOK_CODE "\x68\x00\x00\x00\x00\xc3"
+    // byte offset to where to the 0x00000000, to overwrite it with a function pointer
     #define ASM_HOOK_CODE_OFFSET 1
     // alternativly we could do `mov eax 0x00000000, jmp eax`, but it's a byte longer
     //#define ASM_HOOK_CODE "\xb8\x00\x00\x00\x00\xff\xe0"
@@ -289,6 +299,7 @@ asmlinkage long write(unsigned int fd, const char __user *buf, size_t count)
     // so we do things a bit differently:
     // mov rax 0x0000000000000000, jmp rax
     #define ASM_HOOK_CODE "\x48\xb8\x00\x00\x00\x00\x00\x00\x00\x00\xff\xe0"
+    // byte offset to where to the 0x0000000000000000, to overwrite it with a function pointer
     #define ASM_HOOK_CODE_OFFSET 2
 #else
     #error ARCH_ERROR_MESSAGE
@@ -415,6 +426,8 @@ void asm_hook_remove_all(void)
 // ========== END ASM HOOK LIST ==========
 
 
+// ========== ASM HOOK EXAMPLES ==========
+
 unsigned long asm_rmdir_count = 0;
 
 asmlinkage long asm_rmdir(const char __user *pathname)
@@ -428,6 +441,9 @@ asmlinkage long asm_rmdir(const char __user *pathname)
 
     return ret;
 }
+
+
+// ========== END ASM HOOK EXAMPLES ==========
 
 
 // ========== PID LIST ==========
@@ -955,8 +971,8 @@ int init(void)
     sys_call_table = find_syscall_table();
     pr_info("Found sys_call_table at %p\n", sys_call_table);
 
+    // Setup the example hooks
     asm_hook_create(sys_call_table[__NR_rmdir], asm_rmdir);
-
     hook_create(&sys_call_table[__NR_read], read);
     hook_create(&sys_call_table[__NR_write], write);
 
@@ -965,10 +981,12 @@ int init(void)
 
 void exit(void)
 {
+    // Print the results of the example hooks
     pr_info("sys_rmdir was called %lu times\n", asm_rmdir_count);
     pr_info("sys_read was called %lu times\n", read_count);
     pr_info("sys_write was called %lu times\n", write_count);
 
+    // Cleanup
     hook_remove_all();
     asm_hook_remove_all();
     pid_remove_all();

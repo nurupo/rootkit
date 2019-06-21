@@ -21,10 +21,11 @@ The rootkit can do the following:
 The rootkit was tested to work on Linux kernels 2.6.32-38 and 4.4.0-22 as provided by Ubuntu in Ubuntu 10.04.4 LTS and Ubuntu 16.04 LTS respectively, but it should be very easy to port to kernels in-between, as well as newer ones.
 
 There is some architecture-specific code in the rootkit which is implemented only for x86 and x86-64 architectures.
-That's the code for finding the system call table, disabling write-protected memory, one of the two function hooking methods.
+That's the code for finding the system call table, disabling write-protected memory and one of the two function hooking methods.
 It should be very easy to port to a new architecture, and some of this code is not strictly necessary for the rootkit to function, e.g. the non-portable hooking method could be stripped away, though you must be a very boring person if you are willing to miss on the fun of function hooking that overwrites machine code of the target kernel function such that it calls our hook function instead.
 
 The rootkit was tested only with 1 CPU core, so it may or may not function correctly on a multi-core system.
+It likely won't run very well on a multi-core system as the rootkit was written expecting there to be only 1 thread executing anything at any given time, so it lacks atomic writes/reads and mutexes around list data structures.
 
 ## Build
 
